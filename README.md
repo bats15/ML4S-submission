@@ -16,18 +16,13 @@ The main notebook trains a neural network to learn the velocity and pressure fie
 
 The result is a PINN-based solver that predicts the time-decay of a viscous flow inside a square domain and generates visual outputs showing how the flow weakens over time.
 
-## Problem Setup
+## Problem
 
 The governing equations used in the notebook are the incompressible Navier-Stokes equations:
 
-\[
-\rho \left( \frac{\partial \mathbf{u}}{\partial t} + \mathbf{u}\cdot\nabla\mathbf{u} \right)
-= -\nabla p + \mu \nabla^2 \mathbf{u}
-\]
+$$ \rho \left( \frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla \mathbf{u} \right) = -\nabla p + \mu \nabla^2 \mathbf{u} + \mathbf{f} $$
 
-\[
-\nabla \cdot \mathbf{u} = 0
-\]
+$$ \nabla \cdot \mathbf{u} = 0 $$
 
 where the network predicts:
 
@@ -44,9 +39,7 @@ The notebooks use:
 
 Using a characteristic velocity of about 1 and length scale of 1, the notebook notes an approximate Reynolds number of:
 
-\[
 Re = \frac{UL}{\nu} \approx 100
-\]
 
 This corresponds to a laminar-to-transitional regime where viscous decay is expected and is practical for a PINN formulation.
 
