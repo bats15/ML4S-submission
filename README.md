@@ -24,13 +24,13 @@ $$ \rho \left( \frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \cdot \nabla 
 
 $$ \nabla \cdot \mathbf{u} = 0 $$
 
-where the network predicts:
+we predict:
 
 - `u(x, y, t)` = horizontal velocity,
 - `v(x, y, t)` = vertical velocity,
 - `p(x, y, t)` = pressure.
 
-The notebooks use:
+we use:
 
 - density `rho = 1`
 - kinematic viscosity `nu = 0.01`
@@ -39,35 +39,35 @@ The notebooks use:
 
 Using a characteristic velocity of about 1 and length scale of 1, the notebook notes an approximate Reynolds number of:
 
-Re = \frac{UL}{\nu} \approx 100
+$$ Re = \frac{UL}{\nu} \approx 100 $$
 
 This corresponds to a laminar-to-transitional regime where viscous decay is expected and is practical for a PINN formulation.
 
 ## Boundary and Initial Conditions
 
-The training notebook enforces the following conditions:
+We enforces the following conditions:
 
 ### Boundary condition
 
 All four walls satisfy no-slip conditions:
 
-\[
+$$
 u = 0, \quad v = 0
-\]
+$$
 
 ### Initial condition
 
 At `t = 0`, the initial velocity field is:
 
-\[
+$$
 u(x,y,0) = \sin(\pi x)\sin(\pi y), \quad v(x,y,0)=0
-\]
+$$
 
 This gives a smooth starting flow that decays with time due to viscosity.
 
 ## PINN Architecture
 
-The network used in both notebooks is a fully connected neural network:
+The network used is a fully connected neural network:
 
 - input: `(x, y, t)`
 - output: `(u, v, p)`
@@ -78,7 +78,7 @@ The network used in both notebooks is a fully connected neural network:
 
 ## Training Strategy
 
-The main notebook is [`navierStrokesPINN.ipynb`](/z:/CODE%20OFFICIAL/ML4S%20submission/navierStrokesPINN.ipynb). It samples:
+The training file is [`navierStrokesPINN.ipynb`]. It samples:
 
 - interior collocation points for the PDE residual,
 - boundary points on all four walls,
@@ -94,15 +94,15 @@ The loss combines:
 
 In the implemented loop, the model is trained for `5000` epochs with stronger weights on the boundary and initial losses:
 
-\[
+$$
 \text{loss} = \text{physics} + 15 \cdot \text{boundary} + 15 \cdot \text{initial}
-\]
+$$
 
 The trained weights are saved as [`navier_stokes_pinn.pth`](/z:/CODE%20OFFICIAL/ML4S%20submission/navier_stokes_pinn.pth).
 
 ## Evaluation Summary
 
-The notebook reports the following post-training metrics:
+We reports the following training metrics:
 
 - mean continuity residual: `0.013283039443194866`
 - max continuity residual: `1.2919423580169678`
@@ -116,9 +116,9 @@ These values indicate that:
 - the initial condition is reproduced with low average error,
 - and the largest residuals are likely concentrated near hard regions such as wall corners.
 
-## Visualisation Notebook
+## Visualisation file
 
-The second notebook, [`visualise.ipynb`](/z:/CODE%20OFFICIAL/ML4S%20submission/visualise.ipynb), loads the trained model and generates flow visualisations over time.
+[`visualise.ipynb`], loads the trained model and generates flow visualisations over time.
 
 It:
 
@@ -148,8 +148,8 @@ The animation stops once the maximum velocity drops below a fixed threshold, sho
 ## Notes
 
 - The implementation is notebook-based and intended as a clear submission rather than a packaged library.
-- The training notebook includes both the physics formulation and direct numerical checks of the learned solution.
-- The visualization notebook focuses on interpreting the learned dynamics through streamplots and a GIF.
+- The training file includes both the physics formulation and direct numerical checks of the learned solution.
+- The visualization file focuses on interpreting the learned dynamics through streamplots and a GIF.
 
 ## Submission Statement
 
