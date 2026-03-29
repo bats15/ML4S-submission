@@ -1,4 +1,4 @@
-# ML4Sci GSoC Submission
+# Naviar-Strokes with PINNs
 
 This submission is a test for ML4Sci's GSOC problem statement.
 
